@@ -11,6 +11,7 @@ class App extends React.Component {
     this.state = {
       blogs: [],
       error: null,
+      info: null,
       username: '',
       password: '',
       user: null,
@@ -38,6 +39,13 @@ class App extends React.Component {
     }
   }
 
+  clearNotification = () => {
+    this.setState({
+      error: null,
+      info: null
+    })
+  }
+
   handleFieldChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
@@ -52,19 +60,18 @@ class App extends React.Component {
       }
 
       const anewBlog = await blogService.create(blogObj)
+      const msg = 'A new blog "' + this.state.title + '" by ' + this.state.author + ' added.'
       this.setState({
         blogs: this.state.blogs.concat(anewBlog),
         title:'',
         author:'',
-        url:''
+        url:'',
+        info: msg
       })
     } catch(exception) {
       this.setState({
         error: 'Unable to save blog',
       })
-      setTimeout(() => {
-        this.setState({ error: null })
-      }, 3000)
     }
   }
 
@@ -77,20 +84,19 @@ class App extends React.Component {
       })
       window.localStorage.setItem('loggedBlogUser', JSON.stringify(user))
       blogService.setToken(user.token)
-      this.setState({ username:'', password:'', user:user })
+      const msg = 'User ' + user.name + ' successfully logged in.'
+      this.setState({ username:'', password:'', user:user, info:msg })
     } catch(exception) {
       this.setState({
         error: 'Bad username or password',
       })
-      setTimeout(() => {
-        this.setState({ error: null })
-      }, 3000)
     }
   }
 
   logout = () => {
     window.localStorage.removeItem('loggedBlogUser')
-    this.setState({ user: null })
+    const msg = 'User ' + this.state.user.name + ' logged out.'
+    this.setState({ user: null, info: msg })
   }
 
   render() {
@@ -141,7 +147,11 @@ class App extends React.Component {
   
     return (
       <div>
-        <Notification message={this.state.error} />
+        <Notification
+          message={this.state.error}
+          info={this.state.info}
+          clearNotification={this.clearNotification}
+        />
 
         {this.state.user === null ?
           loginForm() : showBlogs()
