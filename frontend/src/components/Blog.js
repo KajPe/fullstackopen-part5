@@ -12,6 +12,11 @@ class Blog extends React.Component {
     this.setState({ visible: !this.state.visible })
   }
 
+  updateLike = (event) => {
+    event.preventDefault()
+    this.props.like(this.props.blog)
+  }  
+
   render() {
     const showWhenVisible = { display: this.state.visible ? '' : 'none' }
 
@@ -36,7 +41,7 @@ class Blog extends React.Component {
         <div style={mouseStyle} onClick={this.toggleVisibility}>{this.props.blog.title}</div>
         <div style={{...showWhenVisible,...paddingStyle}}>
           <div><a href={this.props.blog.url}>{this.props.blog.url}</a></div>
-          <div>{this.props.blog.likes} likes <button>like</button></div>
+          <div>{this.props.blog.likes} likes <button onClick={this.updateLike} >like</button></div>
           <div>Added by: {this.props.blog.author}</div>
         </div>
       </div>

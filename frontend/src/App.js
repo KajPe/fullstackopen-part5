@@ -76,6 +76,31 @@ class App extends React.Component {
     }
   }
 
+  likeBlog = async (blog) => {
+    try {
+      const blogObj = {
+        id: blog.id,
+        user: blog.user,
+        likes: blog.likes + 1,
+        author: blog.author,
+        title: blog.title,
+        url: blog.url
+      }
+
+      const updBlog = await blogService.update(blogObj)
+      const msg = 'The blog "' + blog.title + '" was liked.'
+      const blogs = this.state.blogs.map(ab => ab.id !== blog.id ? ab : updBlog)
+      this.setState({
+        blogs: blogs,
+        info: msg
+      })
+    } catch(exception) {
+      this.setState({
+        error: 'Unable to update blog',
+      })
+    }
+  }
+
   login = async (event) => {
     event.preventDefault()
     try {
@@ -120,7 +145,11 @@ class App extends React.Component {
         {newBlogForm()}
         <br />
         {this.state.blogs.map(blog => 
-          <Blog key={blog.id} blog={blog}/>
+          <Blog
+            key={blog.id}
+            blog={blog}
+            like={this.likeBlog}
+          />
         )}
       </div>
     )
