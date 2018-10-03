@@ -23,7 +23,17 @@ class Blog extends React.Component {
   updateLike = (event) => {
     event.preventDefault()
     this.props.like(this.props.blog)
-  }  
+  }
+
+  removeButton = () => {
+    if ((!this.props.blog.user) || (this.props.blog.user.username.toString() === this.props.user.username.toString())) {
+      return (
+        <div>
+          <button onClick={this.delete} >Delete</button>
+        </div>
+      )
+  }
+}
 
   render() {
     const showWhenVisible = { display: this.state.visible ? '' : 'none' }
@@ -51,7 +61,7 @@ class Blog extends React.Component {
           <div><a href={this.props.blog.url}>{this.props.blog.url}</a></div>
           <div>{this.props.blog.likes} likes <button onClick={this.updateLike} >like</button></div>
           <div>Added by: {this.props.blog.author}</div>
-          <div><button onClick={this.delete} >Delete</button></div>
+          {this.removeButton()}
         </div>
       </div>
     )
