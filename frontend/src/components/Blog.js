@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 class Blog extends React.Component {
   constructor(props) {
@@ -32,8 +33,8 @@ class Blog extends React.Component {
           <button onClick={this.delete} >Delete</button>
         </div>
       )
+    }
   }
-}
 
   render() {
     const showWhenVisible = { display: this.state.visible ? '' : 'none' }
@@ -66,6 +67,13 @@ class Blog extends React.Component {
       </div>
     )
   }
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  delete: PropTypes.func.isRequired,
+  like: PropTypes.func.isRequired
 }
 
 export default Blog

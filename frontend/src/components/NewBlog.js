@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 class NewBlog extends React.Component {
   render() {
@@ -23,5 +24,13 @@ class NewBlog extends React.Component {
     )
   }
 }
-            
+
+NewBlog.propTypes = {
+  addNewBlog: PropTypes.func.isRequired,
+  handleFieldChange: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired
+}
+
 export default NewBlog
