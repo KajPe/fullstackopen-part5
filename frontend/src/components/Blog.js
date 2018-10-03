@@ -57,8 +57,8 @@ class Blog extends React.Component {
 
     return (
       <div style={blogStyle}>
-        <div style={mouseStyle} onClick={this.toggleVisibility}>{this.props.blog.title}</div>
-        <div style={{...showWhenVisible,...paddingStyle}}>
+        <div className="blogTitle" style={mouseStyle} onClick={this.toggleVisibility}>{this.props.blog.title}</div>
+        <div className="showBlog" style={{...showWhenVisible,...paddingStyle}}>
           <div><a href={this.props.blog.url}>{this.props.blog.url}</a></div>
           <div>{this.props.blog.likes} likes <button onClick={this.updateLike} >like</button></div>
           <div>Added by: {this.props.blog.author}</div>
