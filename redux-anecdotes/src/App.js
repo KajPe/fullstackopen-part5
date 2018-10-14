@@ -10,12 +10,20 @@ const Button = ({ handleClick, text }) => (
 class App extends React.Component {
 
   vote = (id) => () => {
-    console.log(id)
     this.props.store.dispatch({
       type: 'VOTE',
       data: { id }
     })
   }
+
+  addAnecdote = async (event) => {
+    event.preventDefault()
+    this.props.store.dispatch({
+      type: 'ADD',
+      data: { content: event.target.content.value }
+    })
+    event.target.content.value = ''
+  }  
 
   render() {
     const anecdotes = this.props.store.getState()
@@ -41,9 +49,11 @@ class App extends React.Component {
           )
         }
         <h2>create new</h2>
-        <form>
-          <div><input /></div>
-          <button>create</button> 
+        <form onSubmit={this.addAnecdote}>
+          <div>
+            <input type="text" name="content" />
+          </div>
+          <button type="submit">Create</button> 
         </form>
       </div>
     )
