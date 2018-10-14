@@ -1,9 +1,25 @@
 import React from 'react';
 
 
+const Button = ({ handleClick, text }) => (
+  <button onClick={handleClick} style={{margin:5}}>
+    {text}
+  </button>
+)
+
 class App extends React.Component {
+
+  vote = (id) => () => {
+    console.log(id)
+    this.props.store.dispatch({
+      type: 'VOTE',
+      data: { id }
+    })
+  }
+
   render() {
     const anecdotes = this.props.store.getState()
+
     return (
       <div>
         <h2>Anecdotes</h2>
@@ -14,7 +30,7 @@ class App extends React.Component {
             </div>
             <div>
               has {anecdote.votes}
-              <button>vote</button>
+              <Button handleClick={this.vote(anecdote.id)} text="Vote" />
             </div>
           </div>
         )}
