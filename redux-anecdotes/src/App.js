@@ -23,17 +23,23 @@ class App extends React.Component {
     return (
       <div>
         <h2>Anecdotes</h2>
-        {anecdotes.map(anecdote=>
-          <div key={anecdote.id}>
-            <div>
-              {anecdote.content} 
+        {
+          anecdotes
+          .sort(function(a,b) {
+            return b.votes - a.votes
+          })
+          .map(anecdote=>
+            <div key={anecdote.id}>
+              <div>
+                {anecdote.content} 
+              </div>
+              <div>
+                has {anecdote.votes}
+                <Button handleClick={this.vote(anecdote.id)} text="Vote" />
+              </div>
             </div>
-            <div>
-              has {anecdote.votes}
-              <Button handleClick={this.vote(anecdote.id)} text="Vote" />
-            </div>
-          </div>
-        )}
+          )
+        }
         <h2>create new</h2>
         <form>
           <div><input /></div>
