@@ -5,12 +5,18 @@
   "dependencies": {
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
-    "react-scripts": "1.1.5"
+    "react-scripts": "1.1.5",
+    "redux": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "deep-freeze": "0.0.1",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0"
   }
 }

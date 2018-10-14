@@ -1,5 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { createStore } from 'redux'
+import counterReducer from './reducer'
+
+const store = createStore(counterReducer)
 
 const Header = ({ text }) => {
   return (
@@ -64,36 +68,29 @@ class Statistics extends React.Component {
 }
 
 class App extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      hyva: 0,
-      neutraali: 0,
-      huono: 0
-    }
-  }
-
-  kasvata = (e) => () => {
-    this.setState({ [e]: this.state[e] + 1 })
-  }
-  
   render() {
     return (
       <div>
         <Header text="Anna palautetta" />
         <div>
-          <Button handleClick={this.kasvata('hyva')} text="Hyvä" />
-          <Button handleClick={this.kasvata('neutraali')} text="Neutraali" />
-          <Button handleClick={this.kasvata('huono')} text="Huono" />
+          <Button handleClick={e => store.dispatch({ type: 'GOOD'})} text="Hyvä" />
+          <Button handleClick={e => store.dispatch({ type: 'OK' })} text="Neutraali" />
+          <Button handleClick={e => store.dispatch({ type: 'BAD' })} text="Huono" />
         </div>
         <Header text="Statistiikka" />
-        <Statistics values={this.state} />
+        <Statistics values={store.getState()} />
       </div>
     )
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-)
+const renderApp = () => {
+  ReactDOM.render(
+    <App />,
+    document.getElementById('root')
+  )
+}
+
+renderApp()
+store.subscribe(renderApp)
+
